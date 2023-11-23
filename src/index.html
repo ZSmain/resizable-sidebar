@@ -45,6 +45,8 @@
 	sidebar.style.flexBasis = '0px';
 	let sidebarSize = '350px';
 
+    let snapingWidth = 20;
+
     resizer.addEventListener("mousedown", (event) => {
         // preventing the default behaviour will prevent the text 
         // select in both the sidebar and the map view no mouse movement.
@@ -57,7 +59,13 @@
     });
 
     function resize(e) {
-        sidebar.style.flexBasis = `${window.innerWidth - e.x}px`;
+        let newWidth = window.innerWidth - e.x;
+        if (newWidth < snapingWidth) {
+            sidebar.style.flexBasis = '0px';
+            return;
+        }
+
+        sidebar.style.flexBasis = `${newWidth}px`;
     }
 
     sidebarToggleBtn.addEventListener('click', () => {
